@@ -1,0 +1,40 @@
+{
+  "manifest_version": 2,
+  "name": "Demo",
+  "description": "This extension allow the user to select the text and redirect to the Google application",
+  "version": "1.0",
+  "browser_action": {
+    "default_icon": "Logo.png",
+    "default_popup": "html/popup.html",
+    "default_title": "click me"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus"
+  ],
+  "options_page": "html/popup.html",
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+        "matches" : [
+            "http://*/*", "https://*/*"
+        ],
+        "js" : [
+            "js/content.js"
+        ]
+    }
+],
+  "commands": {
+          "toggle-feature-foo": {
+            "suggested_key": {
+              "default": "Ctrl+Shift+Y",
+              "mac": "Command+Shift+H"
+            },
+            "description": "Toggle feature foo"
+          }
+        }
+}
