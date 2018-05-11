@@ -1,22 +1,24 @@
 {
   "manifest_version": 2,
-  "name": "Demo",
-  "description": "This extension allow the user to select the text and redirect to the Google application",
+  "name": "NAVI",
+  "description": "This extension allow the user to select the text and redirect to the NAVI application",
   "version": "1.0",
   "browser_action": {
-    "default_icon": "Logo.png",
+    "default_icon": "NaviLogo.png",
     "default_popup": "html/popup.html",
     "default_title": "click me"
   },
   "permissions": [
     "activeTab",
     "storage",
-    "contextMenus"
+    "contextMenus",
+    "http://*/*",
+    "https://*/*"
   ],
   "options_page": "html/popup.html",
   "background": {
-    "scripts": ["js/background.js"],
-    "persistent": true
+    "scripts": ["js/eventPage.js", "js/background.js"],
+    "persistent": false
   },
   "content_scripts": [
     {
@@ -28,6 +30,7 @@
         ]
     }
 ],
+"web_accessible_resources": ["js/content.js"],
   "commands": {
           "toggle-feature-foo": {
             "suggested_key": {

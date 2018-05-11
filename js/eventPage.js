@@ -1,36 +1,16 @@
-// var contextMenuItem = {
-//   "id": "navi",
-//   "title": "NAVI",
-//    "shortcut": "ctrl+n",
-//   "contexts": ["selection"]
-// }
-//
-// chrome.contextMenus.create(contextMenuItem);
+// This function is called onload in the popup code
+function getPageDetails(callback) {
 
-chrome.commands.onCommand.addListener(function(command) {
-  console.log('Command:', command);
-});
-
-function init() {
-  textToHyperLink();
-}
-
-function textToHyperLink(event) {
-  var text = "";
-  if (window.getSelection) {
-    text = window.getSelection().toString();
-  } else if (document.selection) {
-    text = document.selection.createRange().text;
-  }
-  return text;
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
-}
-
-// chrome.tabs.query({ active: true, currentWindow: true}, function(tabs) {
-//   chrome.pageAction.show(tabs[0].id);
-// })
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      for(var i = 0; i<tabs.length;i++) {
+        var tabId=tabs[i].id;
+        // Inject the content script into the current page
+        chrome.tabs.executeScript(tabId, {"file": "js/content.js"});
+      }
+  });
+    // When a message is received from the content script
+    chrome.runtime.onMessage.addListener(function(message) {
+        // Call the callback function i.e onPageDetailsReceived in our case
+        callback(message);
+    });
+};
