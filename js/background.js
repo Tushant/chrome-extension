@@ -1,7 +1,7 @@
   var selectedTopic = null;
   chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-      console.log('req', request.message, request.data) // not listened
+      console.log('req', request.message, request.data)
       switch(request.message) {
        case 'setTopic':
         window.selectedTopic = request.data;
@@ -15,7 +15,7 @@
   function savetopic(info, tab) {
     fetch('http://www.google.com/search?q='+selectedTopic)
       .then(function(response) {
-        console.log('response ---->', response);
+        console.log('response ---->', response.json());
         return response.json()
       })
       .then(function(re){
